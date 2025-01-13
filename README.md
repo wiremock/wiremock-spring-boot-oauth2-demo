@@ -3,6 +3,15 @@
 Requires a JVM of version 17 or above to be installed.
 
 ## How to run
+
+Clone the project and cd into it:
+
+```bash
+git clone git@github.com:wiremock/wiremock-spring-boot-oauth2-demo.git --depth 1
+cd wiremock-spring-boot-oauth2-demo
+```
+
+
 In one terminal start the OAuth2 mock:
 
 ```bash
