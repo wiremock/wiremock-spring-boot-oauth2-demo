@@ -98,21 +98,6 @@
     },
     "persistent" : true
   }, {
-    "id" : "95900ca1-6688-4eab-b8c4-a5fc8107c420",
-    "name" : "Favicon",
-    "request" : {
-      "url" : "/favicon.svg",
-      "method" : "GET"
-    },
-    "response" : {
-      "status" : 200,
-      "bodyFileName": "images/favicon.svg",
-      "headers" : {
-        "Content-Type" : "image/svg+xml"
-      }
-    },
-    "persistent" : true
-  }, {
     "id" : "e5c94f05-740e-46fc-857a-3e79698fdaf3",
     "name" : "JWKS",
     "request" : {
@@ -214,7 +199,52 @@
     },
     "persistent" : true,
     "priority" : 7
-  } ],
+  },{
+    "id" : "95900ca1-6688-4eab-b8c4-a5fc8107c420",
+    "name" : "Favicon",
+    "request" : {
+      "url" : "/favicon.svg",
+      "method" : "GET"
+    },
+    "response" : {
+      "status" : 200,
+      "bodyFileName": "images/favicon.svg",
+      "headers" : {
+        "Content-Type" : "image/svg+xml"
+      }
+    },
+    "persistent" : true
+  }, {
+      "name" : "OAuth2 logo",
+      "request" : {
+        "url" : "/images/oauth-2-logo.png",
+        "method" : "GET"
+      },
+      "response" : {
+        "status" : 200,
+        "bodyFileName": "images/oauth-2-logo.png",
+        "headers" : {
+          "Content-Type" : "image/png"
+        }
+      },
+      "persistent" : true
+    }, {
+    "name" : "OpenID connect logo",
+    "request" : {
+      "url" : "/images/openid-icon-100x100.png",
+      "method" : "GET"
+    },
+    "response" : {
+      "status" : 200,
+      "bodyFileName": "images/openid-icon-100x100.png",
+      "headers" : {
+        "Content-Type" : "image/png"
+      }
+    },
+    "persistent" : true
+  }
+
+  ],
   "meta" : {
     "total" : 12
   }
