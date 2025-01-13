@@ -18,7 +18,7 @@ public class SpringBootOauth2Application {
 	public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
 		return http
 				.authorizeHttpRequests(a ->
-						a.requestMatchers("/login", "/oauth2/**", "/openid-connect", "/todo", "/todo/**", "/todo-items/**", "/error", "/css/**", "/js/**", "/images/**", "/assets/**").permitAll()
+						a.requestMatchers("/login", "/oauth2/**", "/openid-connect", "/error", "/css/**", "/js/**", "/images/**", "/assets/**").permitAll()
 								.anyRequest().authenticated()
 				)
 				.exceptionHandling(e -> e
@@ -37,13 +37,7 @@ public class SpringBootOauth2Application {
 		return handler;
 	}
 
-	@GetMapping("/")
-	public ModelAndView getRootPage() {
-		return new ModelAndView("index");
-	}
-
 	public static void main(String[] args) {
 		SpringApplication.run(SpringBootOauth2Application.class, args);
 	}
-
 }
