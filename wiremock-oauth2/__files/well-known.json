@@ -1,0 +1,12 @@
+{
+  "issuer":
+  "https://oauth.wiremockapi.cloud",
+  "authorization_endpoint":
+  "https://oauth.wiremockapi.cloud/oauth/authorize",
+  "token_endpoint":
+  "https://oauth.wiremockapi.cloud/oauth/token",
+  "userinfo_endpoint":
+  "https://oauth.wiremockapi.cloud/userinfo",
+  "jwks_uri":
+  "https://oauth.wiremockapi.cloud/.well-known/jwks.json"
+}

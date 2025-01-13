@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <link rel="stylesheet" type="text/css" href="/css/stylesheet.css" />
+    <link rel="shortcut icon" type="image/x-icon" href="/favicon.svg">
+
+    <title>Mock OAuth2 / OpenID Connect Login</title>
+</head>
+
+<body>
+
+<div id="main">
+    <div id="content">
+        <h1 style="margin-top:0em;">Mock OAuth2 / OpenID Connect Login</h1>
+        <p class="subtitle">Powered by <a href="https://www.wiremock.io/?utm_source=oauth-mock" target="_new">WireMock</a></p>
+
+        <div style="display:flex;justify-content: center;margin-bottom:2em">
+            <img src="/images/oauth-2-logo.png" alt="OAuth2" style="border:none;margin-right:10px;height:90px;width:92px"/>
+            <img src="/images/openid-icon-100x100.png" alt="OpenID Connect" style="border:none;margin-left:10px;height:90px"/>
+        </div>
+
+        <p>
+            This is a simulation of an <strong>OAuth2</strong> / <strong>OpenID Connect</strong> login service for integration and performance testing.
+            <br/>
+            <a href="https://docs.wiremock.io/security/oauth2-mock/" title="OAuth2 mock doc">Learn more</a>.
+        </p>
+
+        <h2>Configuration</h2>
+
+        <p>
+            Authorization URI: <code>{{request.requestLine.baseUrl}}/oauth/authorize</code><br/>
+            Token URI: <code>{{request.requestLine.baseUrl}}/oauth/token</code><br/>
+            User info URI: <code>{{request.requestLine.baseUrl}}/userinfo</code><br/>
+            JWKS URI: <code>{{request.requestLine.baseUrl}}/.well-known/jwks.json</code><br/>
+        </p>
+    </div>
+</div>
+</body>
+</html>

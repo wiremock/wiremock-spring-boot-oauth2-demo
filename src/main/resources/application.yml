@@ -1,0 +1,20 @@
+spring:
+  security:
+    oauth2:
+      client:
+        registration:
+          mock:
+            client-id: xxx
+            client-secret: yyy
+            scope: profile, email
+            redirect-uri: "{baseUrl}/login/oauth2/code/{registrationId}"
+            authorization-grant-type: authorization_code
+            client-name: WireMockOAuth2
+        provider:
+          mock:
+            authorization-uri: http://localhost:9988/oauth/authorize
+            token-uri: http://localhost:9988/oauth/token
+            user-info-uri: http://localhost:9988/userinfo
+            user-name-attribute: sub
+server:
+  port: 8080

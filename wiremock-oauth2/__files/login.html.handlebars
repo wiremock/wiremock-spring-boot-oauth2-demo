@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <style type="text/css">
+        body {
+            font-family: sans-serif;
+        }
+
+        #login-box {
+            max-width: 400px;
+            margin-left:auto;
+            margin-right: auto;
+            margin-top: 100px;
+            border: 1px solid black;
+            padding: 15px
+        }
+
+        .text-input {
+            height: 1.5rem;
+            width: 20rem;
+        }
+
+        .help-text {
+            max-width: 600px;
+            margin-left: auto;
+            margin-right: auto;
+            margin-top: 50px;
+            text-align: center;
+            color: darkgray;
+            line-height: 1.5em;
+            font-weight: lighter;
+            font-size: 1.5em;
+            padding: 15px;
+        }
+
+        @media (max-width: 1000px) {
+            body {
+                font-size: 24px;
+            }
+
+            label {
+                font-size: 38px;
+            }
+
+            .text-input {
+                height: 1.5em;
+                width: 100%;
+                font-size: 2em;
+            }
+
+            #login-box {
+                max-width: 100%;
+            }
+
+            .help-text {
+                max-width: 100%;
+            }
+        }
+    </style>
+    <link rel="shortcut icon" type="image/x-icon" href="/favicon.svg">
+    <title>Simulated OAuth2 / OpenID Connect Login - Powered by WireMock</title>
+</head>
+<body>
+<div id="login-box">
+    <div id="logos" style="text-align: center;margin-top:15px;margin-bottom:15px">
+        <a href="https://www.wiremock.io/" target="_new">
+            <img src="/images/wiremock-small-logo.png" alt="WireMock logo" style="height:50px"/>
+        </a>
+    </div>
+    <p>Simulated OAuth2 / OpenID Connect login service, powered by <a href="https://wiremock.io" target="_new">WireMock</a></p>
+    <br />
+    {{#eq request.query.error.0 'invalidUser'}}
+    <p style="color: red">Error: not a recognised user</p>
+    {{/eq}}
+    <form method="POST" action="/login">
+        <input type="hidden" name="state" value="{{request.query.state}}"/>
+        <input type="hidden" name="redirectUri" value="{{request.query.redirect_uri}}"/>
+        <input type="hidden" name="clientId" value="{{request.query.client_id}}"/>
+        <input type="hidden" name="nonce" value="{{request.query.nonce}}"/>
+
+        <label for="email">Email:</label><br />
+        <input class="text-input" type="email" name="email" placeholder="yours@example.com"/><br /><br />
+
+        <label for="password">Password:</label><br />
+        <input class="text-input" type="password" name="password" />
+
+        <br /><br />
+        <input id="login-submit" type="submit" value="Login" style="font-size: 120%" />
+    </form>
+</div>
+
+<div class="help-text">
+    How to use: enter any email address and password. It doesn't matter if they don't exist.
+</div>
+</body>
+</html>

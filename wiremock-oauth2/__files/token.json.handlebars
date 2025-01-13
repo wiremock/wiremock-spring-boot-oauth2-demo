@@ -1,0 +1,18 @@
+{{#trim}}
+{{formData request.body 'form' urlDecode=true}}
+{{regexExtract (base64 form.code decode=true) '(.+?)\.\.(.+?)\.\.(.+?)\.\.(.*)$' 'parts'}}
+{{#assign 'emailAddress'}}{{{parts.1}}}{{/assign}}
+{{#assign 'clientId'}}{{{parts.2}}}{{/assign}}
+{{#assign 'nonce'}}{{{parts.3}}}{{/assign}}
+{{#assign 'subject'}}{{{base64 emailAddress}}}{{/assign}}
+{{#assign 'accessToken'}}{{{base64 (stringFormat 'access..%s' emailAddress)}}}{{/assign}}
+{{#assign 'idToken'}}{{#trim}}
+{{{jwt alg='RS256' email=emailAddress iss=request.requestLine.baseUrl aud=clientId sub=subject nonce=nonce}}}
+{{/trim}}{{/assign}}
+
+{
+"access_token":"{{{accessToken}}}",
+"token_type": "Bearer",
+"id_token": "{{{idToken}}}"
+}
+{{/trim}}
