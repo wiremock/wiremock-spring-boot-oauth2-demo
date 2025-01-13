@@ -3,13 +3,13 @@
 Requires a JVM of version 17 or above to be installed.
 
 ## How to run
-Start the OAuth2 mock:
+In one terminal start the OAuth2 mock:
 
 ```bash
 ./gradlew runMocks
 ```
 
-Start the app:
+In another terminal start the app:
 
 ```bash
 ./gradlew bootRun
