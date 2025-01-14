@@ -155,7 +155,9 @@
       "response": {
         "status": 200,
         "bodyFileName": "index.html.handlebars",
-        "headers": {},
+        "headers": {
+          "content-type": "text/html"
+        },
         "transformers": [
           "response-template"
         ]
