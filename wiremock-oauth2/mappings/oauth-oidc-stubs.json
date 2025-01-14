@@ -1,251 +1,310 @@
 {
-  "mappings" : [ {
-    "id" : "b806ceae-57e9-434f-be0a-3b2ca4f6e14b",
-    "name" : "OpenID Configuration",
-    "request" : {
-      "url" : "/.well-known/openid-configuration",
-      "method" : "GET"
-    },
-    "response" : {
-      "status" : 200,
-      "bodyFileName": "well-known.json",
-      "headers" : {
-        "Content-Type" : "application/json"
-      }
-    },
-    "persistent" : true,
-    "priority" : 5
-  }, {
-    "id" : "90971378-e2f3-4dee-ad4d-e9b783e85cfb",
-    "name" : "Login page",
-    "request" : {
-      "urlPath" : "/oauth/authorize",
-      "method" : "GET"
-    },
-    "response" : {
-      "status" : 200,
-      "bodyFileName": "login.html.handlebars",
-      "headers" : { },
-      "transformers" : [ "response-template", "rate-limit" ],
-      "transformerParameters" : {
-        "rateLimitName" : "authentication"
-      }
-    },
-    "persistent" : true
-  }, {
-    "id" : "0d797c8b-0f54-4832-b9b7-3622761e906d",
-    "name" : "Login handler",
-    "request" : {
-      "urlPath" : "/login",
-      "method" : "POST"
-    },
-    "response" : {
-      "status" : 302,
-      "body" : "",
-      "headers" : {
-        "Location" : "{{formData request.body 'form' urlDecode=true}}{{#assign 'code'}}{{{base64 (stringFormat 'auth..%s..%s..%s' form.email form.clientId form.nonce)}}}{{/assign}}{{{form.redirectUri}}}?code={{{urlEncode code}}}&state={{{form.state}}}"
+  "mappings": [
+    {
+      "id": "b806ceae-57e9-434f-be0a-3b2ca4f6e14b",
+      "name": "OpenID Configuration",
+      "request": {
+        "url": "/.well-known/openid-configuration",
+        "method": "GET"
       },
-      "transformers" : [ "response-template", "rate-limit" ],
-      "transformerParameters" : {
-        "rateLimitName" : "authentication"
-      }
-    },
-    "persistent" : true
-  }, {
-    "id" : "bc571e51-e324-4e51-bb6b-1fbd74df1b65",
-    "name" : "Token",
-    "request" : {
-      "urlPath" : "/oauth/token",
-      "method" : "POST",
-      "bodyPatterns" : [ {
-        "contains" : "code="
-      } ]
-    },
-    "response" : {
-      "status" : 200,
-      "bodyFileName": "token.json.handlebars",
-      "headers" : {
-        "Content-Type" : "application/json"
+      "response": {
+        "status": 200,
+        "bodyFileName": "well-known.json",
+        "headers": {
+          "Content-Type": "application/json"
+        },
+        "transformers": [
+          "response-template"
+        ]
       },
-      "transformers" : [ "response-template", "rate-limit" ],
-      "transformerParameters" : {
-        "rateLimitName" : "authentication"
-      }
+      "persistent": true,
+      "priority": 5
     },
-    "persistent" : true
-  }, {
-    "id" : "a45e2815-9ec8-41d2-b7f9-b351ef36cde3",
-    "name" : "User info",
-    "request" : {
-      "urlPath" : "/userinfo",
-      "method" : "GET",
-      "headers" : {
-        "Authorization" : {
-          "contains" : "Bearer "
+    {
+      "id": "90971378-e2f3-4dee-ad4d-e9b783e85cfb",
+      "name": "Login page",
+      "request": {
+        "urlPath": "/oauth/authorize",
+        "method": "GET"
+      },
+      "response": {
+        "status": 200,
+        "bodyFileName": "login.html.handlebars",
+        "headers": {
+          "content-type": "text/html"
+        },
+        "transformers": [
+          "response-template",
+          "rate-limit"
+        ],
+        "transformerParameters": {
+          "rateLimitName": "authentication"
         }
-      }
-    },
-    "response" : {
-      "status" : 200,
-      "bodyFileName": "userinfo.json.handlebars",
-      "headers" : {
-        "Content-Type" : "application/json"
       },
-      "transformers" : [ "response-template", "rate-limit" ],
-      "transformerParameters" : {
-        "rateLimitName" : "authentication"
-      }
+      "persistent": true
     },
-    "persistent" : true
-  }, {
-    "id" : "e5c94f05-740e-46fc-857a-3e79698fdaf3",
-    "name" : "JWKS",
-    "request" : {
-      "url" : "/.well-known/jwks.json",
-      "method" : "GET"
-    },
-    "response" : {
-      "status" : 200,
-      "body" : "{{{jwks}}}",
-      "headers" : {
-        "Content-Type" : "application/json"
+    {
+      "id": "0d797c8b-0f54-4832-b9b7-3622761e906d",
+      "name": "Login handler",
+      "request": {
+        "urlPath": "/login",
+        "method": "POST"
       },
-      "transformers" : [ "response-template", "rate-limit" ],
-      "transformerParameters" : {
-        "rateLimitName" : "authentication"
-      }
-    },
-    "persistent" : true
-  }, {
-    "id" : "f4f9dfc6-de38-4101-91be-64c3d06219ac",
-    "name" : "Landing page",
-    "request" : {
-      "url" : "/",
-      "method" : "GET"
-    },
-    "response" : {
-      "status" : 200,
-      "bodyFileName": "index.html.handlebars",
-      "headers" : { },
-      "transformers" : [ "response-template" ]
-    },
-    "persistent" : true
-  }, {
-    "id" : "25732b4f-715f-4d56-beea-82fe96fe0862",
-    "name" : "CSS",
-    "request" : {
-      "url" : "/css/stylesheet.css",
-      "method" : "GET"
-    },
-    "response" : {
-      "status" : 200,
-      "bodyFileName": "css/stylesheet.css",
-      "headers" : {
-        "content-type": "text/css"
-      }
-    },
-    "persistent" : true
-  }, {
-    "id" : "4f07d7c8-bcfa-41d1-8dce-492033b70cb0",
-    "name" : "Login handler - invalid user",
-    "request" : {
-      "urlPath" : "/login",
-      "method" : "POST"
-    },
-    "response" : {
-      "status" : 302,
-      "body" : "",
-      "headers" : {
-        "Location" : "{{formData request.body 'form' urlDecode=true}}{{#assign 'code'}}{{base64 form.email}}{{/assign}}{{{form.redirectUri}}}?code={{code}}&state={{{form.state}}}"
+      "response": {
+        "status": 302,
+        "body": "",
+        "headers": {
+          "Location": "{{formData request.body 'form' urlDecode=true}}{{#assign 'code'}}{{{base64 (stringFormat 'auth..%s..%s..%s' form.email form.clientId form.nonce)}}}{{/assign}}{{{form.redirectUri}}}?code={{{urlEncode code}}}&state={{{form.state}}}"
+        },
+        "transformers": [
+          "response-template",
+          "rate-limit"
+        ],
+        "transformerParameters": {
+          "rateLimitName": "authentication"
+        }
       },
-      "transformers" : [ "response-template", "rate-limit" ],
-      "transformerParameters" : {
-        "rateLimitName" : "authentication"
-      }
+      "persistent": true
     },
-    "persistent" : true,
-    "priority" : 7
-  }, {
-    "id" : "d61fe0b3-c735-43f3-aa76-d5e8a91313b7",
-    "name" : "Test redirect",
-    "request" : {
-      "urlPath" : "/test-auth",
-      "method" : "GET"
-    },
-    "response" : {
-      "status" : 302,
-      "body" : "",
-      "headers" : {
-        "Location" : "{{request.requestLine.baseUrl}}/oauth/authorize?redirect_uri={{request.requestLine.baseUrl}}/test-success&state=123"
+    {
+      "id": "bc571e51-e324-4e51-bb6b-1fbd74df1b65",
+      "name": "Token",
+      "request": {
+        "urlPath": "/oauth/token",
+        "method": "POST",
+        "bodyPatterns": [
+          {
+            "contains": "code="
+          }
+        ]
       },
-      "transformers" : [ "response-template" ]
-    },
-    "persistent" : true,
-    "priority" : 7
-  }, {
-    "id" : "f5f4e020-81a0-4a56-8452-5330e6a8bb15",
-    "name" : "Test success",
-    "request" : {
-      "urlPath" : "/test-success",
-      "method" : "GET"
-    },
-    "response" : {
-      "status" : 200,
-      "body" : "<!DOCTYPE html>\n<html>\n  <head>\n    <link rel=\"shortcut icon\" type=\"image/x-icon\" href=\"/favicon.svg\"/>\n    <title>Simulated Auth0 Test Success Page - Powered by WireMock</title>\n  </head>\n<body>\n  <h1>Success!</h1>\n</body>\n</html>",
-      "headers" : {
-        "Content-Type" : "text/html"
+      "response": {
+        "status": 200,
+        "bodyFileName": "token.json.handlebars",
+        "headers": {
+          "Content-Type": "application/json"
+        },
+        "transformers": [
+          "response-template",
+          "rate-limit"
+        ],
+        "transformerParameters": {
+          "rateLimitName": "authentication"
+        }
       },
-      "transformers" : [ "response-template" ]
+      "persistent": true
     },
-    "persistent" : true,
-    "priority" : 7
-  },{
-    "id" : "95900ca1-6688-4eab-b8c4-a5fc8107c420",
-    "name" : "Favicon",
-    "request" : {
-      "url" : "/favicon.svg",
-      "method" : "GET"
-    },
-    "response" : {
-      "status" : 200,
-      "bodyFileName": "images/favicon.svg",
-      "headers" : {
-        "Content-Type" : "image/svg+xml"
-      }
-    },
-    "persistent" : true
-  }, {
-      "name" : "OAuth2 logo",
-      "request" : {
-        "url" : "/images/oauth-2-logo.png",
-        "method" : "GET"
+    {
+      "id": "a45e2815-9ec8-41d2-b7f9-b351ef36cde3",
+      "name": "User info",
+      "request": {
+        "urlPath": "/userinfo",
+        "method": "GET",
+        "headers": {
+          "Authorization": {
+            "contains": "Bearer "
+          }
+        }
       },
-      "response" : {
-        "status" : 200,
+      "response": {
+        "status": 200,
+        "bodyFileName": "userinfo.json.handlebars",
+        "headers": {
+          "Content-Type": "application/json"
+        },
+        "transformers": [
+          "response-template",
+          "rate-limit"
+        ],
+        "transformerParameters": {
+          "rateLimitName": "authentication"
+        }
+      },
+      "persistent": true
+    },
+    {
+      "id": "e5c94f05-740e-46fc-857a-3e79698fdaf3",
+      "name": "JWKS",
+      "request": {
+        "url": "/.well-known/jwks.json",
+        "method": "GET"
+      },
+      "response": {
+        "status": 200,
+        "body": "{{{jwks}}}",
+        "headers": {
+          "Content-Type": "application/json"
+        },
+        "transformers": [
+          "response-template",
+          "rate-limit"
+        ],
+        "transformerParameters": {
+          "rateLimitName": "authentication"
+        }
+      },
+      "persistent": true
+    },
+    {
+      "id": "f4f9dfc6-de38-4101-91be-64c3d06219ac",
+      "name": "Landing page",
+      "request": {
+        "url": "/",
+        "method": "GET"
+      },
+      "response": {
+        "status": 200,
+        "bodyFileName": "index.html.handlebars",
+        "headers": {},
+        "transformers": [
+          "response-template"
+        ]
+      },
+      "persistent": true
+    },
+    {
+      "id": "25732b4f-715f-4d56-beea-82fe96fe0862",
+      "name": "CSS",
+      "request": {
+        "url": "/css/stylesheet.css",
+        "method": "GET"
+      },
+      "response": {
+        "status": 200,
+        "bodyFileName": "css/stylesheet.css",
+        "headers": {
+          "content-type": "text/css"
+        }
+      },
+      "persistent": true
+    },
+    {
+      "id": "4f07d7c8-bcfa-41d1-8dce-492033b70cb0",
+      "name": "Login handler - invalid user",
+      "request": {
+        "urlPath": "/login",
+        "method": "POST"
+      },
+      "response": {
+        "status": 302,
+        "body": "",
+        "headers": {
+          "Location": "{{formData request.body 'form' urlDecode=true}}{{#assign 'code'}}{{base64 form.email}}{{/assign}}{{{form.redirectUri}}}?code={{code}}&state={{{form.state}}}"
+        },
+        "transformers": [
+          "response-template",
+          "rate-limit"
+        ],
+        "transformerParameters": {
+          "rateLimitName": "authentication"
+        }
+      },
+      "persistent": true,
+      "priority": 7
+    },
+    {
+      "id": "d61fe0b3-c735-43f3-aa76-d5e8a91313b7",
+      "name": "Test redirect",
+      "request": {
+        "urlPath": "/test-auth",
+        "method": "GET"
+      },
+      "response": {
+        "status": 302,
+        "body": "",
+        "headers": {
+          "Location": "{{request.baseUrl}}/oauth/authorize?redirect_uri={{request.baseUrl}}/test-success&state=123"
+        },
+        "transformers": [
+          "response-template"
+        ]
+      },
+      "persistent": true,
+      "priority": 7
+    },
+    {
+      "id": "f5f4e020-81a0-4a56-8452-5330e6a8bb15",
+      "name": "Test success",
+      "request": {
+        "urlPath": "/test-success",
+        "method": "GET"
+      },
+      "response": {
+        "status": 200,
+        "body": "<!DOCTYPE html>\n<html>\n  <head>\n    <link rel=\"shortcut icon\" type=\"image/x-icon\" href=\"/favicon.svg\"/>\n    <title>Simulated Auth0 Test Success Page - Powered by WireMock</title>\n  </head>\n<body>\n  <h1>Success!</h1>\n</body>\n</html>",
+        "headers": {
+          "Content-Type": "text/html"
+        },
+        "transformers": [
+          "response-template"
+        ]
+      },
+      "persistent": true,
+      "priority": 7
+    },
+    {
+      "id": "95900ca1-6688-4eab-b8c4-a5fc8107c420",
+      "name": "Favicon",
+      "request": {
+        "url": "/favicon.svg",
+        "method": "GET"
+      },
+      "response": {
+        "status": 200,
+        "bodyFileName": "images/favicon.svg",
+        "headers": {
+          "Content-Type": "image/svg+xml"
+        }
+      },
+      "persistent": true
+    },
+    {
+      "name": "OAuth2 logo",
+      "request": {
+        "url": "/images/oauth-2-logo.png",
+        "method": "GET"
+      },
+      "response": {
+        "status": 200,
         "bodyFileName": "images/oauth-2-logo.png",
-        "headers" : {
-          "Content-Type" : "image/png"
+        "headers": {
+          "Content-Type": "image/png"
         }
       },
-      "persistent" : true
-    }, {
-    "name" : "OpenID connect logo",
-    "request" : {
-      "url" : "/images/openid-icon-100x100.png",
-      "method" : "GET"
+      "persistent": true
     },
-    "response" : {
-      "status" : 200,
-      "bodyFileName": "images/openid-icon-100x100.png",
-      "headers" : {
-        "Content-Type" : "image/png"
-      }
+    {
+      "name": "OpenID connect logo",
+      "request": {
+        "url": "/images/openid-icon-100x100.png",
+        "method": "GET"
+      },
+      "response": {
+        "status": 200,
+        "bodyFileName": "images/openid-icon-100x100.png",
+        "headers": {
+          "Content-Type": "image/png"
+        }
+      },
+      "persistent": true
     },
-    "persistent" : true
-  }
-
+    {
+      "name": "WireMock logo",
+      "request": {
+        "url": "/images/wiremock-small-logo.png",
+        "method": "GET"
+      },
+      "response": {
+        "status": 200,
+        "bodyFileName": "images/wiremock-small-logo.png",
+        "headers": {
+          "Content-Type": "image/png"
+        }
+      },
+      "persistent": true
+    }
   ],
-  "meta" : {
-    "total" : 12
+  "meta": {
+    "total": 12
   }
 }
