@@ -33,7 +33,7 @@ public class SpringBootOauth2Application {
 
 	public AuthenticationSuccessHandler successHandler() {
 		SimpleUrlAuthenticationSuccessHandler handler = new SimpleUrlAuthenticationSuccessHandler();
-		handler.setDefaultTargetUrl("/user");
+		handler.setDefaultTargetUrl("/");
 		return handler;
 	}
 
