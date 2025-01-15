@@ -2,7 +2,7 @@
     {{#assign 'accessToken'}}{{{regexExtract request.headers.Authorization.0 '[^\s]*$'}}}{{/assign}}
     {{regexExtract (base64 accessToken decode=true) '(.+?)\.\.(.+?)$' 'parts'}}
     {{#assign 'email'}}{{{parts.1}}}{{/assign}}
-    {{#assign 'sub'}}{{{base64 email}}}{{/assign}}
+    {{#assign 'sub'}}{{{base64 email padding=false}}}{{/assign}}
     {
     "email": "{{{email}}}",
     "sub": "{{{sub}}}"

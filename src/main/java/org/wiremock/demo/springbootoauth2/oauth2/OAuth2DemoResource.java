@@ -13,7 +13,7 @@ import java.util.Map;
 public class OAuth2DemoResource {
 
     @GetMapping("/user")
-    public ModelAndView getUserInfoPage(@AuthenticationPrincipal OAuth2User user) {
+    public ModelAndView getUserInfo(@AuthenticationPrincipal OAuth2User user) {
         ModelAndView modelAndView = new ModelAndView("userinfo");
         modelAndView.addObject("user", Map.of(
                 "email", user.getAttribute("email"),

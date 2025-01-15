@@ -41,7 +41,7 @@ dependencies {
 task runMocks(type: JavaExec) {
     mainClass = 'wiremock.Run'
     classpath = configurations.standalone
-	args = ['--port', '9988', '--root-dir', 'wiremock-oauth2']
+	args = ['--port', '9988', '--root-dir', 'wiremock-oauth2', '--verbose']
 }
 
 tasks.named('test') {

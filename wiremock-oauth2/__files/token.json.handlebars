@@ -4,8 +4,8 @@
 {{#assign 'emailAddress'}}{{{parts.1}}}{{/assign}}
 {{#assign 'clientId'}}{{{parts.2}}}{{/assign}}
 {{#assign 'nonce'}}{{{parts.3}}}{{/assign}}
-{{#assign 'subject'}}{{{base64 emailAddress}}}{{/assign}}
-{{#assign 'accessToken'}}{{{base64 (stringFormat 'access..%s' emailAddress)}}}{{/assign}}
+{{#assign 'subject'}}{{{base64 emailAddress padding=false}}}{{/assign}}
+{{#assign 'accessToken'}}{{{base64 (stringFormat 'access..%s' emailAddress) padding=false}}}{{/assign}}
 {{#assign 'idToken'}}{{#trim}}
 {{{jwt alg='RS256' email=emailAddress iss=request.baseUrl aud=clientId sub=subject nonce=nonce}}}
 {{/trim}}{{/assign}}
